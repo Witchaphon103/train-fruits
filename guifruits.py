@@ -15,15 +15,15 @@ labels = ['Apple', 'Banana', 'Grape', 'Mango', 'Strawberry']
 def browse_image():
     file_path = filedialog.askopenfilename(filetypes=[("Image Files", "*.jpg;*.png;*.jpeg")])
     if file_path:
-        img = Image.open(file_path).resize((224, 224))  # ปรับขนาดภาพให้ตรงกับโมเดล
+        img = Image.open(file_path).resize((224, 224))
         img = ImageTk.PhotoImage(img)
         image_label.config(image=img)
         image_label.image = img
-        image_label.file_path = file_path  # เก็บ path ไว้ใช้ตอนทำนาย
+        image_label.file_path = file_path 
 
 # ฟังก์ชันทำนายผลไม้จากภาพ
 def recognize_image():
-    if hasattr(image_label, "file_path"):  # ตรวจสอบว่ามีภาพที่เลือกหรือไม่
+    if hasattr(image_label, "file_path"):
         img_path = image_label.file_path
         img = image.load_img(img_path, target_size=(224, 224))
         img_array = image.img_to_array(img) / 255.0
@@ -31,7 +31,7 @@ def recognize_image():
 
         predictions = model.predict(img_array)
         predicted_class = np.argmax(predictions)
-        confidence = predictions[0][predicted_class] * 100  # เปลี่ยนเป็นเปอร์เซ็นต์
+        confidence = predictions[0][predicted_class] * 100
 
         result_label.config(text=f"ผลลัพธ์: {labels[predicted_class]} ({confidence:.2f}%)", fg="blue")
 
